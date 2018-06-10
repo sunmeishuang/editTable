@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #c0c0c0;
+            width: 500px;
+        }
+
+        th,
+        td {
+            border: 1px solid #d0d0d0;
+            color: #404060;
+            padding: 10px;
+        }
+</style>
+</head>
+<body>
+    <input type="button" value="添加一行" id="addrow">
+    <table>
+        <thead>
+            <tr>
+                <td>菜名</td>
+                <td>饭店</td>
+                <td>厨师</td>
+            </tr>
+        </thead>
+        <tbody id="tb">
+
+        </tbody>
+        <!--<input type="text" id="inp" >-->
+    </table>
+</body>
+<script>
+    // document.getElementById('inp').autofocus = true;
+    var addrow = document.getElementById('addrow');
+    var tb = document.getElementById('tb');
+    // table添加一行
+    addrow.onclick = function(){
+        var tr = document.createElement('tr');
+        for(var i=0; i<3; i++){
+            tr.appendChild(document.createElement('td'));
+        }
+        tb.appendChild(tr);
+    }
+
+    // 点击td出现input,事件委托
+    var count = 0;
+    tb.onclick = function(e){
+        count++;
+        var td = e.target;
+        // console.log(td);
+        // 判断点击的是否是td标签
+        if(td.nodeName == 'TD'){
+            // 创建input标签并添加到td
+            td.innerHTML = "<input type='text' class='inp"+count+"' value='"+td.innerText+"'>";
+            td.getElementsByTagName('input')[0].focus();
+            
+            // input失去焦点时
+            td.getElementsByTagName('input')[0].onblur = function(){
+                td.innerText = this.value;
+            }
+        }
+    }
+    
+</script>
+</html>
